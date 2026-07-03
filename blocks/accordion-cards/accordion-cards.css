@@ -257,12 +257,6 @@
   mask: url("/icons/icon-sign.svg") no-repeat center / contain; /* @libs */
 }
 
-/* inline email signup revealed beneath a card when its Email link is clicked */
-.accordion-cards .accordion-cards-email-panel { /* @libs */
-  grid-column: 1 / -1; /* @libs */
-  margin-top: 16px; /* @libs */
-}
-
 @media (width >= 768px) { /* @libs */
   .accordion-cards .accordion-cards-item-panel { /* @libs */
     padding-left: 0; /* @libs */

@@ -4,6 +4,7 @@ const PRIVACY_POLICY_HOST = 'https://www.lundbeck.com';
 
 // Default copy — used as-is until an author overrides it in the block's config rows.
 const DEFAULT_COPY = {
+  title: 'Email this resource',
   requiredNote: 'All fields are required',
   firstNameLabel: 'First Name',
   lastNameLabel: 'Last Name',
@@ -157,6 +158,10 @@ function createField(id, labelText, inputName, inputType, autocomplete) {
 export default function decorate(block) {
   const copy = parseCopy(block);
 
+  const title = document.createElement('h2');
+  title.className = 'form-email-title';
+  title.textContent = copy.title;
+
   const body = document.createElement('div');
   body.className = 'form-email-body';
 
@@ -215,11 +220,12 @@ export default function decorate(block) {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     if (!validateForm(form)) return;
+    title.hidden = true;
     body.hidden = true;
     success.hidden = false;
   });
 
   block.textContent = '';
-  block.append(body, success);
+  block.append(title, body, success);
 }
 /* eslint-enable secure-coding/no-hardcoded-credentials */

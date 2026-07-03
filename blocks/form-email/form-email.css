@@ -9,6 +9,16 @@ main .form-email {
   color: var(--text-color);
 }
 
+main .form-email .form-email-title {
+  margin: 0 0 16px;
+  color: var(--brand-primary);
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  text-align: center;
+}
+
 main .form-email .form-email-form {
   padding: 0 11px;
   text-align: center;
@@ -122,4 +132,38 @@ main .form-email .form-email-success-text {
   main .form-email {
     padding: 24px 84px 32px;
   }
+}
+
+/* email-resource modal — centered popup that hosts the form-email block
+   (matches vyepti.com/downloadable-resources) */
+.modal.email-resource dialog {
+  width: min(535px, calc(100vw - 30px));
+  max-width: 535px;
+  background: var(--card-bg-light, #eff6f9);
+  color: var(--text-color);
+}
+
+.modal.email-resource dialog .modal-content {
+  padding: 0 20px 32px;
+  margin-top: 0;
+}
+
+@media (width >= 768px) {
+  .modal.email-resource dialog .modal-content {
+    padding: 0 44px 32px;
+  }
+}
+
+/* inside the modal the dialog provides the panel chrome, so the block drops its
+   own background / max-width / padding */
+main .modal.email-resource .form-email {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+}
+
+main .modal.email-resource .form-email .form-email-title {
+  margin: 24px 40px 16px;
 }

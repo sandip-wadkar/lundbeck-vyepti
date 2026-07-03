@@ -1,6 +1,7 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { loadFragment } from '../fragment/fragment.js';
+import { createModal } from '../modal/modal.js';
 
 const SCROLL_OFFSET_TOKEN = 'accordion-cards-scroll-offset';
 const SCROLL_DURATION_TOKEN = 'accordion-cards-scroll-duration';
@@ -431,35 +432,19 @@ async function loadEmailForm(path) {
   return fragment.querySelector('.form-email');
 }
 
-// Reveals (or toggles) an inline form-email beneath the card whose Email link was
-// clicked. The fragment path comes from the author-supplied href (data-email-fragment).
-// The form is loaded lazily on first open and cached on the card.
-function toggleCardEmailForm(card, link) {
-  let panel = card.querySelector(':scope > .accordion-cards-email-panel');
-
-  if (panel) {
-    const isOpen = !panel.hidden;
-    panel.hidden = isOpen;
-    link.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-    return;
-  }
-
+// Opens the form-email in a centered modal popup (matches vyepti.com). The fragment
+// path comes from the author-supplied href (data-email-fragment); its .form-email
+// block is loaded (decorated, with its own submit listener) and placed in the modal.
+async function openCardEmailModal(link) {
   const fragmentPath = link.dataset.emailFragment;
   if (!fragmentPath) return;
 
-  panel = document.createElement('div');
-  panel.className = 'accordion-cards-email-panel';
-  card.append(panel);
-  link.setAttribute('aria-expanded', 'true');
+  const form = await loadEmailForm(fragmentPath);
+  if (!(form instanceof Element)) return;
 
-  loadEmailForm(fragmentPath).then((form) => {
-    if (form instanceof Element) {
-      panel.append(form);
-    } else {
-      panel.remove();
-      link.setAttribute('aria-expanded', 'false');
-    }
-  });
+  const { block, showModal } = await createModal([form]);
+  block.classList.add('email-resource');
+  showModal();
 }
 
 function setupAccordionCardsEmailForm(block) {
@@ -468,10 +453,7 @@ function setupAccordionCardsEmailForm(block) {
     if (!(link instanceof HTMLAnchorElement)) return;
 
     event.preventDefault();
-    const card = link.closest('.accordion-cards-card');
-    if (!(card instanceof Element)) return;
-
-    toggleCardEmailForm(card, link);
+    openCardEmailModal(link);
   });
 }
 /* eslint-enable secure-coding/no-hardcoded-credentials */
