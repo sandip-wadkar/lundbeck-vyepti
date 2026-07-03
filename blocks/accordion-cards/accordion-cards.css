@@ -5,16 +5,9 @@
   flex-direction: column; /* @libs */
 }
 
-@media (width <= 767px) { /* @libs */
-  .accordion-cards { /* @libs */
-    padding-left: 0; /* @libs */
-    padding-right: 0; /* @libs */
-  }
-
-  .accordion-cards .accordion-cards-item-panel { /* @libs */
-    padding-left: 15px; /* @libs */
-    padding-right: 15px; /* @libs */
-  }
+.accordion-cards { /* @libs */
+  padding-left: 0; /* @libs */
+  padding-right: 0; /* @libs */
 }
 
 .accordion-cards .accordion-cards-item { /* @libs */
@@ -95,21 +88,12 @@
   transform: rotate(0deg); /* @libs */
 }
 
-@media (width >= 768px) { /* @libs */
-  .accordion-cards .accordion-cards-item-trigger { /* @libs */
-    align-items: center; /* @libs */
-  }
-
-  .accordion-cards .accordion-cards-item-icon { /* @libs */
-    margin-top: 0; /* @libs */
-    margin-right: var(--accordion-cards-chevron-margin-right-desktop); /* @libs */
-  }
-}
-
 /* expandable panel */
 .accordion-cards .accordion-cards-item-panel { /* @libs */
   display: none; /* @libs */
   margin-top: var(--accordion-cards-panel-margin-top); /* @libs */
+  padding-left: 15px; /* @libs */
+  padding-right: 15px; /* @libs */
   cursor: default; /* @libs */
 }
 
@@ -132,30 +116,11 @@
   margin: 0; /* @libs */
 }
 
-@media (width >= 768px) { /* @libs */
-  .accordion-cards .accordion-cards-item-intro { /* @libs */
-    margin-top: -13px; /* @libs */
-    margin-bottom: 0; /* @libs */
-    padding: 0 0 48px 15px; /* @libs */
-    text-align: left; /* @libs */
-  }
-
-  .accordion-cards .accordion-cards-item-intro p { /* @libs */
-    padding-left: 14px; /* @libs */
-  }
-}
-
 /* left / right card columns */
 .accordion-cards .accordion-cards-columns { /* @libs */
   display: grid; /* @libs */
   grid-template-columns: 1fr; /* @libs */
   gap: var(--accordion-cards-grid-gap); /* @libs */
-}
-
-@media (width >= 992px) { /* @libs */
-  .accordion-cards .accordion-cards-columns { /* @libs */
-    grid-template-columns: repeat(2, minmax(0, 1fr)); /* @libs */
-  }
 }
 
 .accordion-cards .accordion-cards-column { /* @libs */
@@ -278,13 +243,6 @@
   mask: url("/icons/icon-mail.svg") no-repeat center / contain; /* @libs */
 }
 
-@media (width >= 768px) { /* @libs */
-  .accordion-cards .accordion-cards-card-actions .accordion-cards-action-link .icon[class*="mail"] { /* @libs */
-    width: 20px; /* @libs */
-    height: 11px; /* @libs */
-  }
-}
-
 .accordion-cards .accordion-cards-card-actions .accordion-cards-action-link .icon[class*="forward"] { /* @libs */
   width: 20px; /* @libs */
   height: 8px; /* @libs */
@@ -299,10 +257,44 @@
   mask: url("/icons/icon-sign.svg") no-repeat center / contain; /* @libs */
 }
 
+.accordion-cards-email-modal-body { /* @libs */
+  padding: 0 20px 32px; /* @libs */
+}
+
 @media (width >= 768px) { /* @libs */
+  .accordion-cards .accordion-cards-item-panel { /* @libs */
+    padding-left: 0; /* @libs */
+    padding-right: 0; /* @libs */
+  }
+
+  .accordion-cards .accordion-cards-item-trigger { /* @libs */
+    align-items: center; /* @libs */
+  }
+
+  .accordion-cards .accordion-cards-item-icon { /* @libs */
+    margin-top: 0; /* @libs */
+    margin-right: var(--accordion-cards-chevron-margin-right-desktop); /* @libs */
+  }
+
+  .accordion-cards .accordion-cards-item-intro { /* @libs */
+    margin-top: -13px; /* @libs */
+    margin-bottom: 0; /* @libs */
+    padding: 0 0 48px 15px; /* @libs */
+    text-align: left; /* @libs */
+  }
+
+  .accordion-cards .accordion-cards-item-intro p { /* @libs */
+    padding-left: 14px; /* @libs */
+  }
+
+  .accordion-cards .accordion-cards-card-actions .accordion-cards-action-link .icon[class*="mail"] { /* @libs */
+    width: 20px; /* @libs */
+    height: 11px; /* @libs */
+  }
+
   .accordion-cards .accordion-cards-card { /* @libs */
     display: grid; /* @libs */
-    grid-template-columns: 36% 64%; /* @libs */
+    grid-template-columns: 30% 70%; /* @libs */
     align-items: start; /* @libs */
   }
 
@@ -331,21 +323,37 @@
   .accordion-cards .accordion-cards-card-actions { /* @libs */
     text-align: left; /* @libs */
   }
-}
 
-@media (width >= 768px) and (width <= 991px) { /* @libs */
-  .accordion-cards .accordion-cards-card { /* @libs */
-    grid-template-columns: 30% 70%; /* @libs */
+  .accordion-cards-email-modal-body { /* @libs */
+    padding: 0 84px 32px; /* @libs */
   }
 }
 
-@media (width >= 992px) and (width <= 1199px) { /* @libs */
+@media (width >= 992px) { /* @libs */
+  .accordion-cards .accordion-cards-columns { /* @libs */
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* @libs */
+  }
+
+  .accordion-cards .accordion-cards-card { /* @libs */
+    grid-template-columns: 36% 64%; /* @libs */
+  }
+
   .accordion-cards .accordion-cards-card-image { /* @libs */
     text-align: center; /* @libs */
   }
 
   .accordion-cards .accordion-cards-card-image img { /* @libs */
     padding-left: 0; /* @libs */
+  }
+}
+
+@media (width >= 1200px) { /* @libs */
+  .accordion-cards .accordion-cards-card-image { /* @libs */
+    text-align: left; /* @libs */
+  }
+
+  .accordion-cards .accordion-cards-card-image img { /* @libs */
+    padding-left: 40px; /* @libs */
   }
 }
 
@@ -428,16 +436,6 @@ body.accordion-cards-email-modal-open { /* @libs */
 
 .accordion-cards-email-modal-close .icon.icon-close::after { /* @libs */
   transform: translate(-50%, -50%) rotate(-45deg); /* @libs */
-}
-
-.accordion-cards-email-modal-body { /* @libs */
-  padding: 0 20px 32px; /* @libs */
-}
-
-@media (width >= 768px) { /* @libs */
-  .accordion-cards-email-modal-body { /* @libs */
-    padding: 0 84px 32px; /* @libs */
-  }
 }
 
 .accordion-cards-email-form { /* @libs */
