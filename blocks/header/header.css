@@ -838,11 +838,12 @@ header nav.nav-mobile-open .nav-dropdown-menu a:hover {
   header .nav-links-list > li > a {
     line-height: var(--header-line-height-l);
     text-decoration: none;
-    padding: 16px 0;
+    padding: 16px 0 0;
   }
 
   header .nav-links-list > li > p {
     margin: 0;
+    padding: 16px 0 0;
     line-height: var(--header-line-height-l);
   }
 
