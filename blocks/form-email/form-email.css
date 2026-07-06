@@ -134,29 +134,30 @@ main .form-email .form-email-success-text {
   }
 }
 
-/* email-resource modal — centered popup that hosts the form-email block
-   (matches vyepti.com/downloadable-resources) */
-.modal.email-resource dialog {
+/* When authored as a /modals/… link the global autolinkModals handler opens the
+   fragment in the shared modal; style that popup to host the form-email block
+   (matches vyepti.com/downloadable-resources). */
+.modal:has(.form-email) dialog {
   width: min(535px, calc(100vw - 30px));
   max-width: 535px;
   background: var(--card-bg-light, #eff6f9);
   color: var(--text-color);
 }
 
-.modal.email-resource dialog .modal-content {
+.modal:has(.form-email) dialog .modal-content {
   padding: 0 20px 32px;
   margin-top: 0;
 }
 
 @media (width >= 768px) {
-  .modal.email-resource dialog .modal-content {
+  .modal:has(.form-email) dialog .modal-content {
     padding: 0 44px 32px;
   }
 }
 
 /* inside the modal the dialog provides the panel chrome, so the block drops its
    own background / max-width / padding */
-main .modal.email-resource .form-email {
+main .modal:has(.form-email) .form-email {
   max-width: none;
   margin: 0;
   padding: 0;
@@ -164,6 +165,6 @@ main .modal.email-resource .form-email {
   background: none;
 }
 
-main .modal.email-resource .form-email .form-email-title {
+main .modal:has(.form-email) .form-email .form-email-title {
   margin: 24px 40px 16px;
 }

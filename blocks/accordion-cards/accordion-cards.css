@@ -188,25 +188,34 @@
   text-align: center; /* @libs */
 }
 
-/* download+icon / email+icon are one link — hover changes both */
-.accordion-cards .accordion-cards-card-actions .accordion-cards-action-link { /* @libs */
+/* Action links are authored bold, so decorateButtons() renders them as a.button.
+   Override the pill/button chrome so they read as plain text links + icon, matching
+   the live .tile-link row. download+icon / email+icon are one link — hover changes both. */
+.accordion-cards .accordion-cards-card-actions .accordion-cards-action-link,
+.accordion-cards .accordion-cards-card-actions .accordion-cards-action-link:hover,
+.accordion-cards .accordion-cards-card-actions .accordion-cards-action-link:focus { /* @libs */
   display: inline-flex; /* @libs */
   align-items: center; /* @libs */
   gap: 10px; /* @libs */
+  max-width: none; /* @libs */
   margin: 0; /* @libs */
   padding: 0; /* @libs */
   border: 0; /* @libs */
   border-radius: 0; /* @libs */
   background: none; /* @libs */
-  color: var(--accordion-cards-link-color); /* @libs */
   font-size: var(--accordion-cards-link-font-size); /* @libs */
   font-weight: var(--accordion-cards-link-font-weight); /* @libs */
   line-height: var(--accordion-cards-link-line-height); /* @libs */
   text-decoration: none; /* @libs */
   white-space: nowrap; /* @libs */
   vertical-align: middle; /* @libs */
+  overflow: visible; /* @libs */
   cursor: pointer; /* @libs */
   transition: color 0.2s ease-in-out; /* @libs */
+}
+
+.accordion-cards .accordion-cards-card-actions .accordion-cards-action-link { /* @libs */
+  color: var(--accordion-cards-link-color); /* @libs */
 }
 
 .accordion-cards .accordion-cards-card-actions .accordion-cards-action-link + .accordion-cards-action-link { /* @libs */

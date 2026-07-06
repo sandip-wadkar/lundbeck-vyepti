@@ -1,177 +1,43 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { loadFragment } from '../fragment/fragment.js';
-import { createModal } from '../modal/modal.js';
 
 const SCROLL_OFFSET_TOKEN = 'accordion-cards-scroll-offset';
 const SCROLL_DURATION_TOKEN = 'accordion-cards-scroll-duration';
 const SCROLL_OFFSET_FALLBACK = 40;
 const SCROLL_DURATION_FALLBACK = 500;
 
-function optimizeCardImage(imageCol) {
-  const img = imageCol.querySelector('img');
-  if (!(img instanceof HTMLImageElement) || !img.src) return;
-  const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '400' }]);
-  const optimizedImg = optimizedPic.querySelector('img');
-  if (optimizedImg instanceof HTMLImageElement) moveInstrumentation(img, optimizedImg);
-  img.closest('picture')?.replaceWith(optimizedPic);
-}
-
-function isActionText(text) {
-  const normalized = text.replace(/:icon-[a-z0-9-]+:/gi, '').replace(/\s+/g, ' ').trim();
-  return normalized.length <= 40
-    && /^(download|email|sign up|signup|find a location)\b/i.test(normalized);
-}
-
+// An action paragraph holds an authored action link. Authors mark these links bold, so
+// the global decorateButtons() has already turned them into <p.button-wrapper><a.button>
+// before this block runs.
 function isActionParagraph(node) {
-  if (!(node instanceof Element) || !node.matches('p')) return false;
-  if (node.querySelector('.icon, span[class*="icon-"]')) return true;
-  if (/:icon-[a-z0-9-]+:/i.test(node.textContent)) return true;
-  if (node.querySelector('picture, img')) return false;
-  const text = node.textContent.replace(/\s+/g, ' ').trim();
-  if (isActionText(text)) return true;
-  return false;
+  return node instanceof Element && node.matches('p') && !!node.querySelector('a.button');
 }
 
-function getFollowingIcon(anchor) {
-  let node = anchor.nextSibling;
-  while (node) {
-    if (node.nodeType === Node.TEXT_NODE && !node.textContent.trim()) {
-      node = node.nextSibling;
-    } else if (node instanceof Element && node.matches('.icon, span[class*="icon-"]')) {
-      return node;
-    } else {
+// Collects the trailing run of action-link paragraphs into a single actions row. The
+// links keep their .button class (an authored /modals/… link is auto-opened as a modal
+// by the global autolinkModals handler); styling is handled in CSS.
+function normalizeActionLinks(contentCol) {
+  const children = [...contentCol.children];
+  const actionParagraphs = [];
+  for (let i = children.length - 1; i >= 0; i -= 1) {
+    const child = children[i];
+    if (isActionParagraph(child)) {
+      actionParagraphs.unshift(child);
+    } else if (actionParagraphs.length) {
       break;
     }
   }
-  return null;
-}
+  if (!actionParagraphs.length) return;
 
-function getActionLinkLabel(anchor) {
-  return anchor.textContent.replace(/:icon-[a-z0-9-]+:/gi, '').replace(/\s+/g, ' ').trim();
-}
-
-function isDownloadActionLink(anchor) {
-  const label = getActionLinkLabel(anchor);
-  if (/^download$/i.test(label)) return true;
-  try {
-    const { pathname } = new URL(anchor.href, window.location.href);
-    return /\.pdf$/i.test(pathname);
-  } catch {
-    return false;
-  }
-}
-
-// Returns the fragment path an email/form link points at, or null. The author wires
-// the Email link to a fragment (e.g. /modals/email); that fragment holds the
-// form-email block revealed inline. Both relative (/modals/email) and full
-// (https://…/modals/email) hrefs are accepted; only the pathname is used.
-function getEmailFragmentPath(anchor) {
-  try {
-    const { pathname } = new URL(anchor.href, window.location.href);
-    return /^\/modals?\//i.test(pathname) ? pathname.replace(/\/$/, '') : null;
-  } catch {
-    return null;
-  }
-}
-
-// The email action is any non-download link that points at a /modals/ fragment. This
-// keeps the visible label free-form (it need not say "Email") — the fragment href is
-// what marks it as the inline-form trigger. Real navigation links (sign-up,
-// find-a-location) point elsewhere and are left as normal links.
-function isEmailActionLink(anchor) {
-  return !isDownloadActionLink(anchor) && getEmailFragmentPath(anchor) !== null;
-}
-
-function buildActionLink(anchor) {
-  anchor.classList.add('accordion-cards-action-link');
-
-  const iconInAnchor = anchor.querySelector('.icon, span[class*="icon-"]');
-  if (!iconInAnchor) {
-    const icon = getFollowingIcon(anchor);
-    if (icon) anchor.append(icon);
-  }
-
-  if (isDownloadActionLink(anchor)) {
-    anchor.setAttribute('target', '_blank');
-    anchor.setAttribute('rel', 'noopener noreferrer');
-  } else {
-    const fragmentPath = isEmailActionLink(anchor) ? getEmailFragmentPath(anchor) : null;
-    if (fragmentPath) {
-      anchor.dataset.emailFragment = fragmentPath;
-      anchor.setAttribute('href', '#');
-      anchor.setAttribute('role', 'button');
-      anchor.classList.add('accordion-cards-action-email');
-    }
-  }
-
-  return anchor;
-}
-
-function paragraphHasActionContent(paragraph) {
-  if (paragraph.querySelector('a')) return true;
-  return /:icon-[a-z0-9-]+:/i.test(paragraph.textContent);
-}
-
-function getActionHrefFromGroup(paragraphs) {
-  const anchor = paragraphs.flatMap((p) => [...p.querySelectorAll('a[href]')])[0];
-  return anchor instanceof HTMLAnchorElement ? anchor.href : null;
-}
-
-function wrapParagraphInActionLink(paragraph, href) {
-  const anchor = document.createElement('a');
-  if (href) anchor.href = href;
-  while (paragraph.firstChild) anchor.append(paragraph.firstChild);
-  return buildActionLink(anchor);
-}
-
-function normalizeActionLinks(contentCol) {
-  const groups = [];
-  let current = [];
-
-  [...contentCol.children].forEach((child) => {
-    if (child.matches('p') && isActionParagraph(child)) {
-      current.push(child);
-    } else if (current.length) {
-      groups.push(current);
-      current = [];
-    }
-  });
-
-  if (current.length) groups.push(current);
-
-  groups.forEach((paragraphs) => {
-    const tileLink = document.createElement('div');
-    tileLink.className = 'accordion-cards-card-actions';
-    const groupHref = getActionHrefFromGroup(paragraphs);
-
-    paragraphs.forEach((paragraph) => {
-      const anchors = [...paragraph.querySelectorAll('a')];
-      if (anchors.length) {
-        anchors.forEach((anchor) => tileLink.append(buildActionLink(anchor)));
-        return;
-      }
-
-      const icon = paragraph.querySelector('.icon, span[class*="icon-"]');
-      const lastLink = tileLink.querySelector('.accordion-cards-action-link:last-child');
-      if (icon && lastLink && !lastLink.querySelector('.icon, span[class*="icon-"]')) {
-        lastLink.append(icon);
-        return;
-      }
-
-      if (paragraphHasActionContent(paragraph) || isActionText(paragraph.textContent)) {
-        tileLink.append(wrapParagraphInActionLink(paragraph, groupHref));
-      } else if (icon) {
-        const anchor = document.createElement('a');
-        if (groupHref) anchor.href = groupHref;
-        anchor.append(icon);
-        tileLink.append(buildActionLink(anchor));
-      }
+  const actions = document.createElement('div');
+  actions.className = 'accordion-cards-card-actions';
+  actionParagraphs.forEach((paragraph) => {
+    paragraph.querySelectorAll('a.button').forEach((anchor) => {
+      anchor.classList.add('accordion-cards-action-link');
+      actions.append(anchor);
     });
-
-    paragraphs[0].replaceWith(tileLink);
-    paragraphs.slice(1).forEach((paragraph) => paragraph.remove());
   });
+  contentCol.append(actions);
+  actionParagraphs.forEach((paragraph) => paragraph.remove());
 }
 
 function styleCardContent(contentCol) {
@@ -266,7 +132,6 @@ function structureSplitCard(card) {
   if (!hasCardMedia(children[0])) return false;
 
   children[0].className = 'accordion-cards-card-image';
-  optimizeCardImage(children[0]);
   children[1].className = 'accordion-cards-card-content';
   styleCardContent(children[1]);
   return true;
@@ -279,7 +144,6 @@ function structureFlatCard(card) {
     imageWrap.className = 'accordion-cards-card-image';
     imageWrap.append(mediaNode);
     card.prepend(imageWrap);
-    optimizeCardImage(imageWrap);
   }
 
   const contentWrap = document.createElement('div');
@@ -422,42 +286,6 @@ function scheduleAccordionCardsScroll(header) {
   });
 }
 
-/* eslint-disable secure-coding/no-hardcoded-credentials -- 'email' class names and labels, not secrets */
-// Loads the authored fragment at `path` and returns its decorated .form-email element.
-// loadFragment fetches + decorates on each call, so every card gets a working form
-// (with its own submit listener) rather than a listener-less clone.
-async function loadEmailForm(path) {
-  const fragment = await loadFragment(path);
-  if (!(fragment instanceof Element)) return null;
-  return fragment.querySelector('.form-email');
-}
-
-// Opens the form-email in a centered modal popup (matches vyepti.com). The fragment
-// path comes from the author-supplied href (data-email-fragment); its .form-email
-// block is loaded (decorated, with its own submit listener) and placed in the modal.
-async function openCardEmailModal(link) {
-  const fragmentPath = link.dataset.emailFragment;
-  if (!fragmentPath) return;
-
-  const form = await loadEmailForm(fragmentPath);
-  if (!(form instanceof Element)) return;
-
-  const { block, showModal } = await createModal([form]);
-  block.classList.add('email-resource');
-  showModal();
-}
-
-function setupAccordionCardsEmailForm(block) {
-  block.addEventListener('click', (event) => {
-    const link = event.target.closest('.accordion-cards-action-email');
-    if (!(link instanceof HTMLAnchorElement)) return;
-
-    event.preventDefault();
-    openCardEmailModal(link);
-  });
-}
-/* eslint-enable secure-coding/no-hardcoded-credentials */
-
 export default function decorate(block) {
   const wrapper = document.createElement('div');
   wrapper.className = 'accordion-cards-sections';
@@ -500,5 +328,4 @@ export default function decorate(block) {
 
   block.textContent = '';
   block.append(wrapper);
-  setupAccordionCardsEmailForm(block);
 }
