@@ -14,9 +14,9 @@
       }
     },
     {
-      "title": "Accordion Cards Section",
-      "id": "accordion-cards-section",
-      "model": "accordion-cards-section",
+      "title": "Accordion Cards Item",
+      "id": "accordion-cards-item",
+      "model": "accordion-cards-item",
       "plugins": {
         "da": {
           "rows": 1,
@@ -33,16 +33,16 @@
   ],
   "models": [
     {
-      "title": "Accordion Cards Section",
-      "id": "accordion-cards-section",
-      "model": "accordion-cards-section",
+      "title": "Accordion Cards Item",
+      "id": "accordion-cards-item",
+      "model": "accordion-cards-item",
       "fields": [
         {
           "component": "richtext",
           "valueType": "string",
           "name": "summary",
           "value": "summary",
-          "label": "Section Heading",
+          "label": "Accordion Heading",
           "required": true
         },
         {
@@ -75,7 +75,7 @@
     {
       "id": "accordion-cards",
       "components": [
-        "accordion-cards-section"
+        "accordion-cards-item"
       ]
     }
   ]

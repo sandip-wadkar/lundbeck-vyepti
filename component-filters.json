@@ -16,6 +16,7 @@
       "embed",
       "fragment",
       "form",
+      "form-email",
       "hero",
       "image",
       "quote",
@@ -30,7 +31,7 @@
   {
     "id": "accordion-cards",
     "components": [
-      "accordion-cards-section"
+      "accordion-cards-item"
     ]
   },
   {
