@@ -1,9 +1,20 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-const SCROLL_OFFSET_TOKEN = 'accordion-cards-scroll-offset';
-const SCROLL_DURATION_TOKEN = 'accordion-cards-scroll-duration';
-const SCROLL_OFFSET_FALLBACK = 40;
-const SCROLL_DURATION_FALLBACK = 500;
+function getScrollOffset() {
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue('--accordion-cards-scroll-offset')
+    .trim();
+  const parsed = parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : 40;
+}
+
+function getScrollDuration() {
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue('--accordion-cards-scroll-duration')
+    .trim();
+  const parsed = parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : 500;
+}
 
 // An action paragraph is a trailing paragraph made up only of links (Download, Email,
 // etc.) — its visible text is exactly its links' text, ignoring icon tokens/whitespace.
@@ -248,14 +259,6 @@ function setSectionExpanded(section, expanded) {
   }
 }
 
-function getTokenPx(tokenName, fallback) {
-  const value = getComputedStyle(document.documentElement)
-    .getPropertyValue(`--${tokenName}`)
-    .trim();
-  const parsed = parseFloat(value);
-  return Number.isFinite(parsed) ? parsed : fallback;
-}
-
 function animateScrollTo(top, duration) {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) {
@@ -285,8 +288,8 @@ function scrollAccordionCardsHeaderIntoView(header) {
   if (!(header instanceof Element)) return;
   const top = header.getBoundingClientRect().top
     + window.scrollY
-    - getTokenPx(SCROLL_OFFSET_TOKEN, SCROLL_OFFSET_FALLBACK);
-  animateScrollTo(top, getTokenPx(SCROLL_DURATION_TOKEN, SCROLL_DURATION_FALLBACK));
+    - getScrollOffset();
+  animateScrollTo(top, getScrollDuration());
 }
 
 function scheduleAccordionCardsScroll(header) {

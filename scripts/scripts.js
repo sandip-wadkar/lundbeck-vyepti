@@ -388,13 +388,14 @@ export function decorateSections(main) {
  */
 export function groupFlexSections(main) {
   const sections = [...main.querySelectorAll(':scope > .section')].slice(0, MAX_SECTIONS);
+  const sectionLimit = Math.min(sections.length, MAX_SECTIONS);
   let i = 0;
-  while (i < sections.length) {
+  while (i < sectionLimit) {
     if (!sections[i].classList.contains('flex')) {
       i += 1;
     } else {
       let j = i + 1;
-      while (j < sections.length && sections[j].classList.contains('flex')) {
+      while (j < sectionLimit && sections[j].classList.contains('flex')) {
         j += 1;
       }
       const run = sections.slice(i, j);
@@ -974,7 +975,6 @@ function decorateNestedSections(main) {
  * Decorates the main element.
  * @param {Element} main The main element
  */
-// eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateIconsAndBullets(main);
@@ -1161,7 +1161,6 @@ async function loadLazy(doc) {
  * without impacting the user experience.
  */
 function loadDelayed() {
-  // eslint-disable-next-line import/no-cycle
   const importDelayed = () => import('./delayed.js');
 
   if ('requestIdleCallback' in window) {
@@ -1193,7 +1192,6 @@ export async function loadPage() {
 
 // DA UE Editor support before page load
 if (window.location.hostname.includes('ue.da.live')) {
-  // eslint-disable-next-line import/no-unresolved
   await import(`${window.hlx.codeBasePath}/ue/scripts/ue.js`).then(({ default: ue }) => ue());
 }
 loadPage();

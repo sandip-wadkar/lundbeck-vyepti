@@ -1,4 +1,3 @@
-/* eslint-disable secure-coding/no-hardcoded-credentials -- 'email' field names and labels, not secrets */
 const PRIVACY_POLICY_PATH = '/us/privacy-policy';
 const PRIVACY_POLICY_HOST = 'https://www.lundbeck.com';
 
@@ -228,4 +227,3 @@ export default function decorate(block) {
   block.textContent = '';
   block.append(title, body, success);
 }
-/* eslint-enable secure-coding/no-hardcoded-credentials */
