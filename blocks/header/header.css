@@ -838,12 +838,11 @@ header nav.nav-mobile-open .nav-dropdown-menu a:hover {
   header .nav-links-list > li > a {
     line-height: var(--header-line-height-l);
     text-decoration: none;
-    padding: 16px 0 0;
+    padding: 16px 0;
   }
 
   header .nav-links-list > li > p {
     margin: 0;
-    padding: 16px 0 0;
     line-height: var(--header-line-height-l);
   }
 
@@ -885,10 +884,13 @@ header nav.nav-mobile-open .nav-dropdown-menu a:hover {
     border-radius: 0 0 4px 4px;
     margin: 0;
     left: -26px;
+
+    /* Open just below the label text, matching vyepti.com (parity). */
+    top: var(--header-dropdown-top);
   }
 
-  /* Transparent hover bridge fills the small remaining seam so the pointer
-     never leaves the hovered item while travelling down into the panel. */
+  /* Transparent hover bridge fills the seam between the label and the panel so
+     the pointer never leaves the hovered item while travelling down into it. */
   header .nav-links-list > li.nav-drop[aria-expanded='true'] > .nav-dropdown-menu::before {
     content: '';
     position: absolute;
