@@ -136,12 +136,16 @@ function consolidateSinglePanelImage(block) {
 export default function decorate(block) {
   const rows = [...block.children];
 
-  // Section style single-light / single-dark always renders as a single panel
-  if (hasSingleSectionStyle(block)) {
+  // Section style single-light / single-dark, or the teaser block variant, always
+  // render as a single full-bleed panel with a text overlay.
+  if (hasSingleSectionStyle(block) || block.classList.contains('teaser')) {
     const isMultiCell = rows.some((row) => row.children.length >= 2);
     if (isMultiCell) flattenToSinglePanelRows(block);
     consolidateSinglePanelImage(block);
     decorateSinglePanel(block);
+    // The teaser defines its own image-in-flow layout; drop the legacy `.single`
+    // class so its absolute-image rules don't collapse the image-driven height.
+    if (block.classList.contains('teaser')) block.classList.remove('single');
     return;
   }
 

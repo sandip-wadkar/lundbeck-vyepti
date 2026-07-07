@@ -449,7 +449,85 @@ main > .section.hero-container {
   color: var(--hero-text-color-light);
 }
 
+/* ═══════════════════════════════════════════════════
+   TEASER VARIANT (.hero.teaser) — non-homepage sub-banner
+   Full-width image with a left-aligned text overlay. Colour treatment from
+   single-dark (teal headline, white caption) but left-aligned per source.
+   ═══════════════════════════════════════════════════ */
 
+.hero.teaser {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+/* Image drives height (width:100% + height:auto = intrinsic ratio per breakpoint) */
+.hero.teaser > div:first-child {
+  position: relative;
+  z-index: var(--hero-z-bg);
+}
+
+.hero.teaser > div:first-child > div,
+.hero.teaser > div:first-child p {
+  width: 100%;
+  margin: 0;
+}
+
+.hero.teaser img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Left-aligned content overlay */
+.hero.teaser > div:last-of-type {
+  position: absolute;
+  top: var(--hero-teaser-overlay-top);
+  left: var(--hero-teaser-overlay-inset-x);
+  z-index: var(--hero-z-content);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--hero-teaser-overlay-max-width);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Eyebrow (h3) — dark, matches source */
+.hero.teaser h3 {
+  color: var(--hero-teaser-eyebrow-color);
+  font-family: var(--heading-font-family);
+  font-size: var(--hero-teaser-eyebrow-font-size);
+  font-weight: var(--hero-teaser-eyebrow-font-weight);
+  line-height: var(--hero-teaser-eyebrow-line-height);
+  margin: 0 0 var(--hero-eyebrow-gap);
+  text-align: left;
+}
+
+/* Headline (h1) — teal */
+.hero.teaser h1 {
+  color: var(--hero-teaser-heading-color);
+  font-family: var(--heading-font-family);
+  font-size: var(--hero-teaser-heading-font-size);
+  font-weight: var(--hero-teaser-heading-font-weight);
+  line-height: var(--hero-teaser-heading-line-height);
+  margin: 0;
+  text-align: left;
+}
+
+/* Actor portrayal caption — white, bottom-left */
+.hero.teaser .actor-portrayal {
+  position: absolute;
+  left: var(--hero-teaser-overlay-inset-x);
+  bottom: 20px;
+  z-index: var(--hero-z-caption);
+  margin: 0;
+  color: var(--hero-teaser-caption-color);
+  text-shadow: var(--hero-text-shadow);
+  font-style: italic;
+  font-weight: 400;
+}
 
 @media (width >= 600px) {
   .hero.single {
@@ -583,6 +661,21 @@ main > .section.hero-container {
 .section.single-light .hero > div:last-of-type a, .section.single-dark .hero > div:last-of-type a {
   margin-top:24px;
 }
+
+  /* Teaser desktop — overlay lower & inset from left, larger headline (source parity) */
+  .hero.teaser > div:last-of-type {
+    top: var(--hero-teaser-overlay-top-desktop);
+    left: var(--hero-teaser-overlay-inset-x-desktop);
+  }
+
+  .hero.teaser h1 {
+    font-size: var(--hero-teaser-heading-font-size-desktop);
+  }
+
+  .hero.teaser .actor-portrayal {
+    left: auto;
+    right: 40px;
+  }
 }
 
 @media (width >= 992px) {
