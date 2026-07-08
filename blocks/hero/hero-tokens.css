@@ -166,11 +166,12 @@
   text-align: center;
 }
 
-/* Actor portrayal caption — white, italic, bottom-right. */
+/* Actor portrayal caption — white, italic, bottom-right. Bottom offset matches
+   the source (11px mobile / 16px at 768px+). */
 .hero.teaser .actor-portrayal {
   position: absolute;
   right: 20px;
-  bottom: 20px;
+  bottom: 11px;
   z-index: var(--hero-z-caption);
   margin: 0;
   color: var(--hero-teaser-caption-color);
@@ -212,6 +213,7 @@
 
   .hero.teaser .actor-portrayal {
     right: 40px;
+    bottom: 16px;
   }
 }
 
