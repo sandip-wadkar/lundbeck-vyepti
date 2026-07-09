@@ -79,12 +79,14 @@
      Colours and fonts reuse global tokens; layout reuses the single-* tokens. */
   --hero-teaser-eyebrow-color: var(--text-color);
   --hero-teaser-eyebrow-font-size: 18px;
+  --hero-teaser-eyebrow-font-size-md: 22px;
   --hero-teaser-eyebrow-font-size-desktop: 24px;
   --hero-teaser-eyebrow-font-weight: 600;
   --hero-teaser-eyebrow-line-height: 22px;
   --hero-teaser-eyebrow-line-height-desktop: 32px;
   --hero-teaser-eyebrow-gap: 8px;
   --hero-teaser-heading-line-height: 36px;
+  --hero-teaser-heading-line-height-md: 40px;
   --hero-teaser-heading-color: var(--brand-primary);
   --hero-teaser-caption-color: var(--hero-text-color-light);
   --hero-teaser-caption-font-size: 12px;
@@ -207,16 +209,20 @@
     text-align: left;
   }
 
+  /* Source eyebrow at 768 stays 18px/32px with no bottom margin (the 8px gap
+     is mobile-only); it steps up to 22px@992 and 24px@1200. */
   .hero.teaser .hero-panel-dark .hero-panel-description > p:first-child,
   .hero.teaser h3 {
-    font-size: var(--hero-teaser-eyebrow-font-size-desktop);
+    font-size: var(--hero-teaser-eyebrow-font-size);
     line-height: var(--hero-teaser-eyebrow-line-height-desktop);
+    margin-bottom: 0;
     text-align: left;
   }
 
   .hero.teaser .hero-panel-description > h1,
   .hero.teaser h1 {
     font-size: var(--hero-single-heading-font-size-m);
+    line-height: var(--hero-teaser-heading-line-height-md);
     width: 60%;
     text-align: left;
   }
@@ -235,6 +241,11 @@
     max-width: 960px;
   }
 
+  .hero.teaser .hero-panel-dark .hero-panel-description > p:first-child,
+  .hero.teaser h3 {
+    font-size: var(--hero-teaser-eyebrow-font-size-md);
+  }
+
   .hero.teaser .hero-panel-description > h1,
   .hero.teaser h1 {
     font-size: 42px;
@@ -246,6 +257,11 @@
 @media (width >= 1200px) {
   .hero.teaser .hero-panel-content {
     max-width: var(--max-width-site);
+  }
+
+  .hero.teaser .hero-panel-dark .hero-panel-description > p:first-child,
+  .hero.teaser h3 {
+    font-size: var(--hero-teaser-eyebrow-font-size-desktop);
   }
 
   .hero.teaser .hero-panel-description > h1,
