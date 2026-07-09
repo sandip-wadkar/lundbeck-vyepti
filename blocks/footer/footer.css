@@ -46,12 +46,13 @@ footer .footer .section:first-child { /* @boilerplate */
   background-color: var(--footer-linkbar-background); /* @boilerplate */
 } /* @boilerplate */
 
-footer .footer .section:first-child .default-content-wrapper { /* @boilerplate */
-  max-width: var(--footer-max-width); /* @boilerplate */
-  margin: 0 auto; /* @boilerplate */
-  padding: var(--footer-linkbar-inner-padding); /* @boilerplate */
-  text-align: var(--footer-link-text-align); /* @boilerplate */
-} /* @boilerplate */
+footer .footer .section:first-child .default-content-wrapper {
+  box-sizing: border-box;
+  max-width: var(--footer-max-width);
+  margin: 0 auto;
+  padding: var(--footer-linkbar-inner-padding);
+  text-align: var(--footer-link-text-align);
+}
 
 footer .footer .section:first-child p { /* @boilerplate */
   margin-top: var(--footer-link-mobile-gap); /* @boilerplate */
@@ -81,10 +82,12 @@ footer .footer .columns-container { /* @boilerplate */
   background-color: var(--footer-background); /* @boilerplate */
 } /* @boilerplate */
 
-footer .footer .columns-container > * { /* @boilerplate */
-  max-width: var(--footer-max-width); /* @boilerplate */
-  margin-inline: auto; /* @boilerplate */
-} /* @boilerplate */
+footer .footer .columns-container > * {
+  box-sizing: border-box;
+  max-width: var(--footer-max-width);
+  margin-inline: auto;
+  padding-inline: 15px;
+}
 
 /* legal copy */
 footer .footer .columns p { /* @boilerplate */
@@ -117,12 +120,12 @@ footer .footer .columns-container > .default-content-wrapper p strong { /* @boil
 } /* @boilerplate */
 
 /* "For assistance, call" label — desktop copy (in the right column) */
-footer .footer .columns-container p:has(.hide-mobile) strong { /* @boilerplate */
-  color: var(--footer-assist-color); /* @boilerplate */
-  font-size: var(--footer-assist-font-size); /* @boilerplate */
-  font-weight: var(--footer-assist-font-weight); /* @boilerplate */
-  line-height: var(--footer-assist-line-height); /* @boilerplate */
-} /* @boilerplate */
+footer .footer .columns-container p:has(.hide-mobile) strong {
+  color: var(--footer-assist-color);
+  font-size: var(--footer-assist-font-size-tablet, var(--footer-assist-font-size));
+  font-weight: var(--footer-assist-font-weight);
+  line-height: var(--footer-assist-line-height);
+}
 
 /* phone pill — styled wherever a tel: link appears (mobile wrapper + desktop
    right column). The icon is supplied via --footer-phone-icon-image. */
@@ -153,7 +156,8 @@ footer .footer .columns-container .columns > div > :nth-child(2) > p:has(img) { 
   display: inline-block; /* @boilerplate */
   margin-right: var(--footer-social-icon-gap); /* @boilerplate */
   vertical-align: middle; /* @boilerplate */
-} /* @boilerplate */
+  margin-top: var(--footer-social-row-margin-top-mobile, 0);
+}
 
 footer .footer .columns-container .columns > div > :nth-child(2) > p:has(img) img { /* @boilerplate */
   display: block; /* @boilerplate */
@@ -182,6 +186,18 @@ footer .footer .columns-container .columns > div > :nth-child(2) > p:has(img):la
     margin-bottom: 0; /* @boilerplate */
   } /* @boilerplate */
 
+  footer .footer .section:first-child {
+    padding: var(--footer-linkbar-padding-desktop, var(--footer-linkbar-padding));
+  }
+
+  footer .footer a[href^="tel:"] {
+    background-position: var(--footer-phone-icon-position-desktop, var(--footer-phone-icon-position));
+  }
+
+  footer .footer .columns-container .columns > div > :nth-child(2) > p:has(img):last-child img {
+    width: var(--footer-logo-width-tablet, var(--footer-logo-width));
+  }
+
   /* links on one centered row */
   footer .footer .section:first-child p { /* @boilerplate */
     display: inline-block; /* @boilerplate */
@@ -199,25 +215,42 @@ footer .footer .columns-container .columns > div > :nth-child(2) > p:has(img):la
   /* legal copy left-aligned */
   footer .footer .columns p { /* @boilerplate */
     text-align: left; /* @boilerplate */
-  } /* @boilerplate */
+    line-height: var(--footer-legal-line-height-desktop, var(--footer-legal-line-height));
+  }
 
-  /* two columns: legal / right column, top-aligned */
+  footer .footer .columns-container .columns > div > :first-child p:not(:last-child) {
+    margin-bottom: var(--footer-legal-margin-bottom-desktop, var(--footer-legal-margin-bottom));
+  }
+
+  /* two columns: legal / right column, top-aligned. margin-inline cancels the
+     parent's 15px padding-inline (added by .columns-container > *) so the
+     columns split against the full row width — same "container padding +
+     row negative-margin + column padding" gutter math the source's grid
+     uses, not just a single layer of padding. */
   footer .footer .columns.columns-2-cols > div { /* @boilerplate */
     align-items: flex-start; /* @boilerplate */
     gap: 0; /* @boilerplate */
+    margin-inline: -15px;
   } /* @boilerplate */
 
-  footer .footer .columns.columns-2-cols > div > :first-child { /* @boilerplate */
-    flex: 0 0 var(--footer-legal-width); /* @boilerplate */
-  } /* @boilerplate */
+  /* tablet (768-991px): even split — the desktop ratio below kicks in at 992px,
+     matching the source's real col-md/col-lg breakpoint (and styles.css's own
+     existing 992px --max-width-site tier) */
+  footer .footer .columns.columns-2-cols > div > :first-child {
+    box-sizing: border-box;
+    flex: 0 0 var(--footer-legal-width-tablet, var(--footer-legal-width));
+    padding-inline: 15px;
+  }
 
   footer .footer .columns.columns-2-cols > div > :nth-child(2) { /* @boilerplate */
     display: flex; /* @boilerplate */
-    flex: 0 0 var(--footer-right-width); /* @boilerplate */
+    box-sizing: border-box;
+    flex: 0 0 var(--footer-right-width-tablet, var(--footer-right-width));
     flex-wrap: wrap; /* @boilerplate */
     align-items: center; /* @boilerplate */
     justify-content: flex-end; /* @boilerplate */
-  } /* @boilerplate */
+    padding-inline: 15px;
+  }
 
   /* assistance label sits inline before the phone pill (both wrapped in
      .hide-mobile spans, visible on desktop) */
@@ -241,5 +274,29 @@ footer .footer .columns-container .columns > div > :nth-child(2) > p:has(img):la
   footer .footer .columns-container .columns > div > :nth-child(2) > p:has(img) { /* @boilerplate */
     order: 3; /* @boilerplate */
     margin-top: var(--footer-social-row-margin-top); /* @boilerplate */
-  } /* @boilerplate */
+    margin-right: var(--footer-social-icon-gap-desktop, var(--footer-social-icon-gap));
+  }
 } /* @boilerplate */
+
+/* tablet/desktop split point (992px): reasserts the real legal/right column
+   ratio, undoing the 768-991px tablet override above */
+@media (width >= 992px) {
+  footer .footer .columns.columns-2-cols > div > :first-child {
+    flex: 0 0 var(--footer-legal-width);
+  }
+
+  footer .footer .columns.columns-2-cols > div > :nth-child(2) {
+    flex: 0 0 var(--footer-right-width);
+  }
+
+  footer .footer .columns-container p:has(.hide-mobile) strong {
+    font-size: var(--footer-assist-font-size);
+  }
+}
+
+/* large desktop (1200px+): full-size Lundbeck logo */
+@media (width >= 1200px) {
+  footer .footer .columns-container .columns > div > :nth-child(2) > p:has(img):last-child img {
+    width: var(--footer-logo-width-desktop, var(--footer-logo-width));
+  }
+}

@@ -59,7 +59,8 @@
      `transparent`, drop the band padding, and set the link color to the
      brand link colour instead of #fff. */
   --footer-linkbar-background: var(--brand-teal); /* #046183; use transparent for no band */ /* @boilerplate */
-  --footer-linkbar-padding: 20px 0 22px; /* outer band padding; 0 when no band */ /* @boilerplate */
+  --footer-linkbar-padding: 16px 41px 16px 42px; /* mobile outer band padding; 0 when no band */
+  --footer-linkbar-padding-desktop: 20px 0 22px; /* outer band padding at 768px+ */
   --footer-linkbar-inner-padding: 0 15px; /* gutter inside the max-width wrapper */ /* @boilerplate */
   --footer-link-text-align: center; /* center on band; left for inline lists */ /* @boilerplate */
   --footer-link-color: #fff; /* link text on the band */ /* @boilerplate */
@@ -74,23 +75,31 @@
   --footer-link-mobile-gap: 10px; /* vertical gap when stacked on mobile */ /* @boilerplate */
   --footer-transition: 0.2s ease; /* @boilerplate */
 
-  /* ---- body section (legal + logo) ---------------------------------- */
-  --footer-body-padding: 40px 15px 28px; /* @boilerplate */
-  --footer-body-padding-mobile: 24px 15px 28px; /* @boilerplate */
+  /* ---- body section (legal + logo) -----------------------------------
+     horizontal gutter lives on .columns-container > * (border-box, centered
+     within the full max-width box) instead of here, so it's included in the
+     max-width like the source's container padding — not added outside it */
+  --footer-body-padding: 40px 0 28px;
+  --footer-body-padding-mobile: 24px 0 28px;
 
   /* legal column (column 1) */
   --footer-legal-color: #484848; /* @boilerplate */
   --footer-legal-font-size: 14px; /* @boilerplate */
-  --footer-legal-line-height: 20px; /* @boilerplate */
-  --footer-legal-margin-bottom: 16px; /* @boilerplate */
-  --footer-legal-width: 58.3333%; /* desktop 2-col split: legal vs right col */ /* @boilerplate */
+  --footer-legal-line-height: 21px; /* mobile */
+  --footer-legal-line-height-desktop: 20px;
+  --footer-legal-margin-bottom: 21px; /* mobile: gap between copyright + disclaimer paragraphs */
+  --footer-legal-margin-bottom-desktop: 20px;
+  --footer-legal-width: 58.3333%; /* desktop (992px+) 2-col split: legal vs right col */
+  --footer-legal-width-tablet: 50%; /* 768-991px: even split before the desktop ratio kicks in at 992px */
 
   /* right column (column 2) */
   --footer-right-width: 41.6667%; /* @boilerplate */
+  --footer-right-width-tablet: 50%; /* 768-991px: even split before the desktop ratio kicks in at 992px */
 
   /* ---- "For assistance, call" label (Vyepti only) ------------------- */
   --footer-assist-color: #484848; /* @boilerplate */
-  --footer-assist-font-size: 17px; /* desktop */ /* @boilerplate */
+  --footer-assist-font-size: 17px; /* desktop, 992px+ */
+  --footer-assist-font-size-tablet: 16px; /* 768-991px — 1px smaller than desktop, matters here because it's the difference between the "For assistance, call" label + phone pill fitting on one line vs wrapping */
   --footer-assist-font-size-mobile: 14px; /* @boilerplate */
   --footer-assist-line-height: 21px; /* @boilerplate */
   --footer-assist-font-weight: 700; /* @boilerplate */
@@ -108,17 +117,22 @@
   --footer-phone-padding: 20px 21px 20px 45px; /* @boilerplate */
   --footer-phone-radius: 30px; /* @boilerplate */
   --footer-phone-icon-size: 16px 19px; /* @boilerplate */
-  --footer-phone-icon-position: 19px 24px; /* @boilerplate */
+  --footer-phone-icon-position: 19px 23px; /* mobile */
+  --footer-phone-icon-position-desktop: 19px 24px;
 
   /* inline phone-handset glyph (white), cropped tight to a 16x19 box so it
      fills the icon area. Swap the path/colour for a different brand icon. */
   --footer-phone-icon-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 19" fill="white"><path d="M3.6 0c-.5 0-1 .2-1.5.5C1 1.3 0 2.6 0 4.2c0 1.4.4 3 1.2 4.7.8 1.7 2 3.4 3.5 5 1.6 1.6 3.3 2.7 5 3.5 1.7.8 3.3 1.2 4.7 1.2h.1c.4 0 .8-.2 1.1-.5.3-.3.4-.7.4-1.1v-2.6c0-.7-.5-1.3-1.2-1.5l-3-.7c-.6-.1-1.2 0-1.6.5l-1 1c-1-.6-2-1.3-2.8-2.2-.9-.8-1.6-1.8-2.2-2.8l1-1c.5-.4.6-1 .5-1.6l-.7-3C4.8.5 4.2 0 3.6 0Z"/></svg>'); /* @boilerplate */
 
   /* ---- social icons + company logo (column 2) ----------------------- */
-  --footer-social-row-margin-top: 27px; /* space above the social/logo row */ /* @boilerplate */
+  --footer-social-row-margin-top: 27px; /* space above the social/logo row (desktop) */
+  --footer-social-row-margin-top-mobile: 44px; /* space above the social/logo row on mobile */
   --footer-social-icon-width: 27px; /* @boilerplate */
-  --footer-social-icon-gap: 13px; /* edge gap between social icons */ /* @boilerplate */
-  --footer-logo-width: 160px; /* Lundbeck logo width (Onfi uses ~114px) */ /* @boilerplate */
+  --footer-social-icon-gap: 10px; /* mobile edge gap between social icons */
+  --footer-social-icon-gap-desktop: 8px;
+  --footer-logo-width: 116px; /* mobile Lundbeck logo width */
+  --footer-logo-width-tablet: 155px; /* 768-1199px */
+  --footer-logo-width-desktop: 160px; /* 1200px+ (Onfi uses ~114px flat) */
 
   /* logo sits 27px from the last social icon; the icon already emits a 13px
      right margin, so this adds the remaining 14px */
@@ -129,8 +143,8 @@
    SITE-SPECIFIC OVERRIDES (extension layer)
    ---------------------------------------------------------------------
    Add rules here that the shared footer.css doesn't cover for a given
-   site. The Vyepti reference needs none. Examples a cloning developer
-   might add (kept here as commented guidance):
+   site. Examples a cloning developer might add (kept here as commented
+   guidance):
 
    Onfi — gray panel, teal inline links, no band:
      :root {
@@ -180,3 +194,11 @@
        margin-top: 16px;
      }
    ===================================================================== */
+
+/* Vyepti: the YouTube glyph is 32x26 in the source (every other social icon
+   is a 27x27 square) — the shared --footer-social-icon-width token can only
+   express one size, so this pins the one exception. */
+footer .footer .columns-container .columns > div > :nth-child(2) > p:has(img[alt="Youtube icon."]) img {
+  width: 32px;
+  height: 26px;
+}
