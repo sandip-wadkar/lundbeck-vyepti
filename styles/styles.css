@@ -85,7 +85,11 @@
   --heading-font-size-s: 18px; /* @libs */
   --heading-font-size-xs: 16px; /* @libs */
 
-  /* layout */
+  /* layout: mobile-first ceiling below is a no-op cap (nothing is ever this
+     wide under 576px); Bootstrap-container-equivalent steps (540/720/960/1140)
+     are applied below at 576/768/992/1200px so every var(--max-width-site)
+     consumer (footer, hero, isi, main > .section > div, ...) narrows in
+     step with the source instead of jumping straight to 1140px at 992px. */
   --max-width-site: 1140px; /* @libs */
   --section-padding-vertical: 40px; /* @libs */
   --icon-size: 24px; /* @libs */
@@ -580,9 +584,9 @@ main > .section { /* @libs */
   margin: 0; /* @libs */
 }
 
-main > .section > div:not(.bg-image) { /* @boilerplate */
-  margin: auto; /* @boilerplate */
-  padding: 0 var(--spacing-m); /* @boilerplate */
+main > .section > div:not(.bg-image) {
+  margin: auto;
+  padding: 0 15px;
 }
 
 /* Section metadata: background image sits behind content */
@@ -623,10 +627,11 @@ main > .section.divider > div:last-child { /* @libs */
   padding-bottom: var(--section-padding);
 }
 
-main > .section > div { /* @libs */
-  max-width: 540px; /* @libs */
-  margin: auto; /* @libs */
-  padding: 0 15px; /* @libs */
+main > .section > div {
+  box-sizing: border-box;
+  max-width: 540px;
+  margin: auto;
+  padding: 0 15px;
 }
 
 /* flex sections — adjacent sections with style=flex are wrapped by JS in a
@@ -770,6 +775,10 @@ main .section.stats-callout h4 {
 }
 
 @media (width >= 576px) {
+  :root {
+    --max-width-site: 540px;
+  }
+
   main .section.stats-callout > div:not(.bg-image) {
     max-width: 540px;
   }
@@ -777,6 +786,8 @@ main .section.stats-callout h4 {
 
 @media (width >= 768px) { /* @libs */
   :root { /* @libs */
+    --max-width-site: 720px;
+
     /* heading sizes scale up on desktop */
     --body-font-size-m: 24px; /* @libs */
     --body-font-size-ms: 18px; /* @libs */
@@ -812,6 +823,10 @@ main .section.stats-callout h4 {
   }
 
 @media (width >= 992px) { /* @libs */
+  :root {
+    --max-width-site: 960px;
+  }
+
   body[data-breadcrumbs] { /* @libs */
     --header-height: calc(var(--nav-height) + var(--breadcrumbs-height)); /* @libs */
   }
@@ -821,9 +836,8 @@ main .section.stats-callout h4 {
     height: auto;
 }
 
-main > .section > div { /* @libs */
-  max-width: var(--max-width-site); /* @libs */
-  padding: 0 32px; /* @libs */
+main > .section > div {
+  max-width: var(--max-width-site);
 }
 
 /* flex sections — equal-width columns side-by-side; section-level only */
@@ -847,6 +861,10 @@ main .section.stats-callout > div:not(.bg-image) {
 }
 
 @media (width >= 1200px) {
+  :root {
+    --max-width-site: 1140px;
+  }
+
   header { /* @libs */
     min-height: var(--nav-height); /* @libs */
     height: auto;
