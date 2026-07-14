@@ -34,6 +34,8 @@ main .columns.locations > div {
   display: flex;
   flex-flow: row wrap;
   gap: var(--columns-locations-gap);
+  max-width: var(--columns-locations-max-width);
+  margin-bottom: var(--columns-locations-margin-bottom);
 }
 
 main .columns.locations > div > div {
