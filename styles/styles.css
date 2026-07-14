@@ -60,6 +60,7 @@
   --section-divider-color: var(--link-hover-color); /* @libs */
   --section-padding: 24px;
   --flex-group-gap: 30px;
+  --flex-group-narrow-copy-gap: 60px;
   
   /* fonts */
   --body-font-family: proxima-nova, proxima-nova-fallback, sans-serif; /* @libs */
@@ -853,6 +854,18 @@ main .flex-group {
 main .flex-group > .section.flex {
   flex: 1 1 0;
   min-width: 0;
+}
+
+/* narrow-copy flex-group (what-to-expect "Choosing a location" + "Prepare for
+   each step"): the source is NOT a 50/50 split — the copy column is fixed to
+   its readable measure and the companion column fills the rest, with a wider
+   gutter between them. */
+main .flex-group:has(> .section.flex .columns.narrow-copy) {
+  gap: var(--flex-group-narrow-copy-gap);
+}
+
+main .flex-group > .section.flex:has(.columns.narrow-copy) {
+  flex: 0 0 var(--columns-narrow-copy-max-width);
 }
 
 main .section.stats-callout > div:not(.bg-image) {
