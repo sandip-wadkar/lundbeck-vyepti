@@ -5,11 +5,11 @@
   --columns-divider-spacing: var(--spacing-l, 32px);
   --columns-divider-color: #7ebcc6;
 
-  /* narrow-copy variant — single-column content measure matching the 570px
-     half-column on vyepti.com/what-to-expect (the source lays this content out
-     as a 50/50 split of the 1140px container). Left-aligned, flush to the
-     section's leading edge; full width on mobile. */
-  --columns-narrow-copy-max-width: 570px;
+  /* narrow-copy variant — single-column readable measure matching the source's
+     left content column on vyepti.com/what-to-expect (~540px; the source's
+     two-column split is not an even 50/50 — the copy column is the narrower
+     side). Left-aligned, flush to the section's leading edge; full width mobile. */
+  --columns-narrow-copy-max-width: 540px;
   --columns-narrow-copy-heading-gap: 16px;
   --columns-narrow-copy-para-gap: 16px;
   --columns-narrow-copy-para-line-height: 22px;
