@@ -211,13 +211,18 @@ main .columns.stats-callout:has(img) > div > div:not(.columns-img-col) > p:first
 }
 
 /* locations: all four option cards in a single row at 992px+ (the source's
-   Bootstrap lg breakpoint); below this they stay 2-up. */
+   Bootstrap lg breakpoint); below this they stay 2-up. Cards size to their
+   own content and pack left with a fixed gap (as the source), so the first
+   icon sits flush with the copy column's leading edge rather than centered
+   inside a stretched cell. */
 @media (width >= 992px) {
   main .columns.locations > div {
     flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: var(--columns-locations-gap);
   }
 
   main .columns.locations > div > div {
-    flex: 1 1 0;
+    flex: 0 0 auto;
   }
 }

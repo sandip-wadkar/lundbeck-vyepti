@@ -22,7 +22,11 @@
   --columns-locations-label-font-size: var(--body-font-size-s, 16px);
   --columns-locations-label-line-height: 18px;
   --columns-locations-label-font-weight: 600;
-  --columns-locations-label-gap: 4px;
+  --columns-locations-label-gap: 3px;
   --columns-locations-max-width: var(--columns-narrow-copy-max-width);
   --columns-locations-margin-bottom: 24px;
+
+  /* desktop (992px+) cards pack at their natural content width, left-aligned,
+     with this gap between them — matching the ~20px spacing on the source. */
+  --columns-locations-gap: 20px;
 }

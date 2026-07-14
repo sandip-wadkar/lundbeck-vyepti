@@ -641,6 +641,7 @@ main .flex-group {
   display: flex;
   flex-direction: column;
   gap: var(--flex-group-gap);
+  box-sizing: border-box;
   max-width: var(--max-width-site);
   margin: var(--section-padding-vertical) auto;
   padding: 0 15px;
