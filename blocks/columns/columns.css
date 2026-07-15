@@ -92,10 +92,11 @@ main .columns.locations img {
 }
 
 /* the 3rd option card (hospital/outpatient) uses a more tightly cropped icon;
-   render it slightly smaller so it reads the same optical size as the others. */
+   render it narrower so it reads the same optical size as the others, but keep
+   the full icon-slot height (object-fit centers the glyph) so its label aligns
+   on the same baseline as the neighboring cards. */
 main .columns.locations > div > div:nth-child(3) img {
   width: var(--columns-locations-icon-size-dense-mobile);
-  height: var(--columns-locations-icon-size-dense-mobile);
 }
 
 main .columns.locations p {
@@ -211,7 +212,7 @@ main .columns.stats-callout:has(img) > div > div:not(.columns-img-col) > p:first
 
   main .columns.locations > div > div:nth-child(3) img {
     width: var(--columns-locations-icon-size-dense);
-    height: var(--columns-locations-icon-size-dense);
+    height: var(--columns-locations-icon-size);
   }
 
   .columns > div > div { /* @boilerplate */
