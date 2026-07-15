@@ -211,6 +211,10 @@ body.appear { /* @libs */
   --link-color: var(--brand-secondary);
 }
 
+.small-text {
+  font-size: var(--body-font-size-xs);
+}
+
 header { /* @libs */
   min-height: var(--nav-height-mobile); /* fits mobile nav; grows to --nav-height at 992px+ */
   height: auto; /* fit nav content so it never overflows onto main */
