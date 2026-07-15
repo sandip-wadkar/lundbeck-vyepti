@@ -89,6 +89,13 @@ main .columns.locations img {
   object-fit: contain;
 }
 
+/* the 3rd option card (hospital/outpatient) uses a more tightly cropped icon;
+   render it slightly smaller so it reads the same optical size as the others. */
+main .columns.locations > div > div:nth-child(3) img {
+  width: var(--columns-locations-icon-size-dense-mobile);
+  height: var(--columns-locations-icon-size-dense-mobile);
+}
+
 main .columns.locations p {
   margin: var(--columns-locations-label-gap) 0 0;
   font-size: var(--columns-locations-label-font-size);
@@ -198,6 +205,11 @@ main .columns.stats-callout:has(img) > div > div:not(.columns-img-col) > p:first
   main .columns.locations img {
     width: var(--columns-locations-icon-size);
     height: var(--columns-locations-icon-size);
+  }
+
+  main .columns.locations > div > div:nth-child(3) img {
+    width: var(--columns-locations-icon-size-dense);
+    height: var(--columns-locations-icon-size-dense);
   }
 
   .columns > div > div { /* @boilerplate */

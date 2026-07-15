@@ -25,6 +25,12 @@
   --columns-locations-icon-size: 108px;
   --columns-locations-icon-size-mobile: 80px;
 
+  /* the hospital/outpatient icon artwork is more tightly cropped than the
+     others, so the source renders it at a smaller box to keep the optical
+     sizing even across the row (81px desktop, 65px mobile). */
+  --columns-locations-icon-size-dense: 81px;
+  --columns-locations-icon-size-dense-mobile: 65px;
+
   /* mobile: narrow cell basis so the two columns pack close together and the
      group centers (matching the source), rather than each spreading to half. */
   --columns-locations-cell-basis-mobile: 34%;
