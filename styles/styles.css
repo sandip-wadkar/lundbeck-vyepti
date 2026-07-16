@@ -577,7 +577,15 @@ main .section ul:where(:not([class], :has(> li .icon), .block > *)) > li::before
   line-height: var(--body-font-size-s);
 }
 
-/* Approved Use / ISI section keeps plain default bullets (no rose dot). */
+/* Approved Use / ISI section keeps plain default bullets (no rose dot). The
+   global rule above strips list-style/padding off classless <ul>s, so restore
+   the native disc marker and indent here too, not just the <li> overrides. */
+main .isi ul {
+  list-style: disc;
+  padding-left: 40px;
+  margin-left: 0;
+}
+
 main .isi ul > li {
   position: static;
   padding-left: 0;
