@@ -61,6 +61,8 @@
   --section-padding: 24px;
   --flex-group-gap: 30px;
   --flex-group-narrow-copy-gap: 60px;
+  --div-width-margin: auto;
+  --div-width-align-items: flex-start;
   
   /* fonts */
   --body-font-family: proxima-nova, proxima-nova-fallback, sans-serif; /* @libs */
@@ -817,6 +819,42 @@ main .section.stats-callout h4 {
     .hide-mobile {
       display: revert;
     }
+
+    /* ==== Start widths ==== */
+
+    div[class^="width-"], div[class*=" width-"] {
+      margin: var(--div-width-margin);
+    }
+    
+    .width-75 {
+      width: 73.5%;
+    }
+    
+    .width-66 {
+      width: 64.5%;
+    }
+    
+    .width-50 {
+      width: 48.5%;
+    }
+    
+    .width-33 {
+      width: 31.5%;
+    }
+    
+    .width-25 {
+      width: 23.5%;
+    }
+    
+    .columns > div:has(> div[class^="width-"],> div[class*=" width-"]) {
+      align-items: var(--div-width-align-items);
+    
+      > div[class^="width-"],> div[class*=" width-"] {
+        flex: none;
+      }
+    }
+    
+    /* ==== End widths ==== */
 
     main .section.stats-callout {
       padding: var(--section-padding-vertical) 0;
