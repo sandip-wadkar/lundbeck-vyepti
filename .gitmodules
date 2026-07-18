@@ -1,0 +1,3 @@
+[submodule "eds-platform-lib"]
+	path = eds-platform-lib
+	url = https://github.com/sandip-wadkar/eds-platform-lib.git
