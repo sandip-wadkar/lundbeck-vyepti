@@ -3,7 +3,7 @@ import { buildPictureContentFromImageCell } from '../../scripts/utils.js';
 import { 
   initializeDataLayer, 
   pushEvent 
-} from './eds-platform-lib/scripts/datalayer.js';
+} from '../../eds-platform-lib/scripts/datalayer.js';
 
 function applyAccentColor(block) {
   block.querySelectorAll('h1 strong, h2 strong, h3 strong, p strong').forEach((strong) => {
